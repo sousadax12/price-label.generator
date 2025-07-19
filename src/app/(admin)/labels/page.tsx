@@ -11,10 +11,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Plus, Loader2, AlertCircle, Printer } from "lucide-react";
+import { Plus, Loader2, AlertCircle, Printer, Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import ProductsTable from "@/components/ProductsTable";
 import ProductDialog from "@/components/ProductDialog";
+import NormalLabel from "@/components/NormalLabel";
+import SmallLabel from "@/components/SmallLabel";
 import getProducts from "@/firebase/firestore/getProducts";
 import addData from "@/firebase/firestore/addData";
 import updateData from "@/firebase/firestore/updateData";
@@ -31,6 +33,7 @@ export default function LabelsPage() {
   const [editingProduct, setEditingProduct] = useState<Product | undefined>(undefined);
   const [deletingProductId, setDeletingProductId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPreview, setShowPreview] = useState(true);
 
   const loadProducts = async () => {
     try {
@@ -199,6 +202,13 @@ export default function LabelsPage() {
           </p>
         </div>
         <div className="flex gap-2">
+          <Button 
+            variant="outline" 
+            onClick={() => setShowPreview(!showPreview)}
+          >
+            {showPreview ? <EyeOff className="h-4 w-4 mr-2" /> : <Eye className="h-4 w-4 mr-2" />}
+            {showPreview ? 'Hide Preview' : 'Show Preview'}
+          </Button>
           <Button 
             variant="outline" 
             onClick={handlePrintLabels}

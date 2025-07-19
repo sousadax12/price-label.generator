@@ -13,6 +13,46 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+const DEFAULT_FORM_DATA: ProductFormData = {
+  category: ProductCategory.MERCEARIA,
+  unit: Unit.UN,
+  price: "",
+  description: "",
+  taxStatus: false,
+  print: true,
+  labelSize: LabelSize.NORMAL,
+};
+
+const PRICE_REGEX = /^\d+([,\.]\d{1,2})?$/;
+
+interface SelectFieldProps<T extends string> {
+  label: string;
+  value: T;
+  options: T[];
+  placeholder: string;
+  onChange: (value: T) => void;
+}
+
+function SelectField<T extends string>({ label, value, options, placeholder, onChange }: SelectFieldProps<T>) {
+  return (
+    <div className="space-y-2">
+      <Label htmlFor={label}>{label}</Label>
+      <Select value={value} onValueChange={onChange}>
+        <SelectTrigger>
+          <SelectValue placeholder={placeholder} />
+        </SelectTrigger>
+        <SelectContent>
+          {options.map((option) => (
+            <SelectItem key={option} value={option}>
+              {option}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+  );
+}
+
 interface ProductFormProps {
   product?: Product;
   onSubmit: (data: ProductFormData) => void;
@@ -21,30 +61,38 @@ interface ProductFormProps {
 }
 
 export default function ProductForm({ product, onSubmit, onCancel, isLoading = false }: ProductFormProps) {
-  const [formData, setFormData] = useState<ProductFormData>({
-    category: ProductCategory.MERCEARIA,
-    unit: Unit.UN,
-    price: "",
-    description: "",
-    taxStatus: false,
-    print: true,
-    labelSize: LabelSize.NORMAL,
-  });
+  const [formData, setFormData] = useState<ProductFormData>(DEFAULT_FORM_DATA);
 
   const [errors, setErrors] = useState<Partial<ProductFormData>>({});
 
+
   useEffect(() => {
     if (product) {
+      const safeCategory = Object.values(ProductCategory).includes(product.category as ProductCategory) 
+        ? product.category as ProductCategory 
+        : ProductCategory.MERCEARIA;
+      
+      const safeUnit = Object.values(Unit).includes(product.unit as Unit) 
+        ? product.unit as Unit 
+        : Unit.UN;
+      
+      const safeLabelSize = product.labelSize && Object.values(LabelSize).includes(product.labelSize as LabelSize)
+        ? product.labelSize as LabelSize
+        : LabelSize.NORMAL;
+      
       setFormData({
-        category: product.category,
-        unit: product.unit,
-        price: product.price,
-        description: product.description,
-        taxStatus: product.taxStatus,
-        print: product.print,
-        labelSize: product.labelSize || LabelSize.NORMAL,
+        category: safeCategory,
+        unit: safeUnit,
+        price: product.price || "",
+        description: product.description || "",
+        taxStatus: product.taxStatus || false,
+        print: product.print !== undefined ? product.print : true,
+        labelSize: safeLabelSize,
       });
+    } else {
+      setFormData(DEFAULT_FORM_DATA);
     }
+    setErrors({});
   }, [product]);
 
   const validateForm = (): boolean => {
@@ -56,7 +104,7 @@ export default function ProductForm({ product, onSubmit, onCancel, isLoading = f
 
     if (!formData.price.trim()) {
       newErrors.price = "Price is required";
-    } else if (!/^\d+([,\.]\d{1,2})?$/.test(formData.price)) {
+    } else if (!PRICE_REGEX.test(formData.price)) {
       newErrors.price = "Price must be in format: 24,95 or 24.95";
     }
 
@@ -68,17 +116,14 @@ export default function ProductForm({ product, onSubmit, onCancel, isLoading = f
     e.preventDefault();
     
     if (validateForm()) {
-      // Normalize price format to use comma as decimal separator
-      const normalizedPrice = formData.price.replace('.', ',');
       onSubmit({
         ...formData,
-        price: normalizedPrice,
+        price: formData.price.replace('.', ','),
       });
     }
   };
 
   const handlePriceChange = (value: string) => {
-    // Allow only numbers, commas, and dots
     const sanitizedValue = value.replace(/[^0-9,\.]/g, '');
     setFormData(prev => ({ ...prev, price: sanitizedValue }));
     if (errors.price) {
@@ -96,68 +141,42 @@ export default function ProductForm({ product, onSubmit, onCancel, isLoading = f
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-3 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="category">Category</Label>
-          <Select
-            value={formData.category}
-            onValueChange={(value: ProductCategory) => 
-              setFormData(prev => ({ ...prev, category: value }))
+        <SelectField
+          label="Category"
+          value={formData.category}
+          options={Object.values(ProductCategory)}
+          placeholder="Select category"
+          onChange={(value: ProductCategory) => {
+            if(value) {
+              setFormData(prev => ({ ...prev, category: value }));
             }
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select category" />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.values(ProductCategory).map((category) => (
-                <SelectItem key={category} value={category}>
-                  {category}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+          }}
+        />
 
-        <div className="space-y-2">
-          <Label htmlFor="unit">Unit</Label>
-          <Select
-            value={formData.unit}
-            onValueChange={(value: Unit) => 
-              setFormData(prev => ({ ...prev, unit: value }))
+        <SelectField
+          label="Unit"
+          value={formData.unit}
+          options={Object.values(Unit)}
+          placeholder="Select unit"
+          onChange={(value: Unit) => {
+            console.log("Unit changed to", value);
+            if(value) {
+              setFormData(prev => ({ ...prev, unit: value }));
             }
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select unit" />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.values(Unit).map((unit) => (
-                <SelectItem key={unit} value={unit}>
-                  {unit}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+          }}
+        />
 
-        <div className="space-y-2">
-          <Label htmlFor="labelSize">Label Size</Label>
-          <Select
-            value={formData.labelSize}
-            onValueChange={(value: LabelSize) => 
-              setFormData(prev => ({ ...prev, labelSize: value }))
+        <SelectField
+          label="Label Size"
+          value={formData.labelSize}
+          options={Object.values(LabelSize)}
+          placeholder="Select label size"
+          onChange={(value: LabelSize) => {
+            if(value) {
+              setFormData(prev => ({ ...prev, labelSize: value }));
             }
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select label size" />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.values(LabelSize).map((size) => (
-                <SelectItem key={size} value={size}>
-                  {size}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+          }}
+        />
       </div>
 
       <div className="space-y-2">

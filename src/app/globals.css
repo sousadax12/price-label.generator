@@ -147,7 +147,7 @@
   .print-label {
     width: 80mm;
     height: 50mm;
-    border: 2px solid black !important;
+    border: 1px dashed black !important;
     color: black !important;
     page-break-inside: avoid;
     break-inside: avoid;
@@ -168,7 +168,7 @@
   .print-label-small {
     width: 65mm;
     height: 35mm;
-    border: 2px solid black !important;
+    border: 1px dashed black !important;
     color: black !important;
     page-break-inside: avoid;
     break-inside: avoid;
@@ -178,7 +178,7 @@
     font-family: Arial, sans-serif;
     display: block;
     position: relative;
-    background-size: cover !important;
+    background-size: contain !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
     -webkit-print-color-adjust: exact !important;
@@ -239,7 +239,7 @@
   .print-label .bg-gray-100 {
     background: #f0f0f0 !important;
     color: black !important;
-    border: 1px solid black !important;
+    border: 1px dashed black !important;
   }
   
   /* Grid layout adjustments for printing */

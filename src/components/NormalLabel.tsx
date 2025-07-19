@@ -36,7 +36,7 @@ export default function NormalLabel({ product }: NormalLabelProps) {
         </div>
         <div className="flex flex-col items-end">
           <div className="text-6xl items-end italic text-gray-900 print:text-black">
-              {Number(product.price).toFixed(2)}
+              {Number.parseFloat(product.price).toFixed(2)}
             </div>
           <span className="text-md items-end text-right font-medium text-gray-600 print:text-black">
             €/ {product.unit === Unit.KG ? 'kg' : 'un'}
@@ -45,8 +45,8 @@ export default function NormalLabel({ product }: NormalLabelProps) {
       </div>
 
       {/* Product Description */}
-      <div className="mb-3" style={{ height: '70px' }}>
-        <span className="font-bold text-3xl leading-tight text-gray-900 print:text-black break-words">
+      <div className="mb-3 flex items-center justify-center" style={{ height: '70px', width: '100%', backgroundColor: 'oklch(0.98 0 0)' }}>
+        <span className="font-bold text-3xl leading-tight text-gray-900 print:text-black break-words text-center">
           {product.description}
         </span>
       </div>
