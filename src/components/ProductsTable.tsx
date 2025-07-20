@@ -95,7 +95,6 @@ export default function ProductsTable({ products, onEdit, onDelete, onTogglePrin
             <SortableHeader field="unit">Unit</SortableHeader>
             <SortableHeader field="price">Price</SortableHeader>
             <SortableHeader field="labelSize">Label Size</SortableHeader>
-            <TableHead>Tax Status</TableHead>
             <TableHead>Print</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
@@ -103,7 +102,7 @@ export default function ProductsTable({ products, onEdit, onDelete, onTogglePrin
         <TableBody>
           {sortedProducts.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
+              <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
                 No products found. Click &quot;Add Product&quot; to get started.
               </TableCell>
             </TableRow>
@@ -129,9 +128,6 @@ export default function ProductsTable({ products, onEdit, onDelete, onTogglePrin
                   >
                     {product.labelSize || LabelSize.NORMAL}
                   </Badge>
-                </TableCell>
-                <TableCell>
-                  <Checkbox checked={product.taxStatus} disabled />
                 </TableCell>
                 <TableCell>
                   <Checkbox 

@@ -31,7 +31,6 @@ export interface Product {
   unit: Unit;                // Using enum for type safety
   price: string;             // e.g., "24,95", "1,20" (price with comma as decimal separator)
   description: string;       // e.g., "PICANHA ANGUS#IRLANDA", "SAL VATEL#RÚSTICO"
-  taxStatus: boolean;        // true when 'S' is present, false otherwise
   print: boolean;            // Whether this product should be printed
   labelSize: LabelSize;      // Size of the label (Normal or Small)
 }
@@ -42,7 +41,6 @@ export interface ProductFormData {
   unit: Unit;
   price: string;
   description: string;
-  taxStatus: boolean;
   print: boolean;
   labelSize: LabelSize;
 }

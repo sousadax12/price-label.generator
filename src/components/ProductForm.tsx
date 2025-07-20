@@ -18,7 +18,6 @@ const DEFAULT_FORM_DATA: ProductFormData = {
   unit: Unit.UN,
   price: "",
   description: "",
-  taxStatus: false,
   print: true,
   labelSize: LabelSize.NORMAL,
 };
@@ -85,7 +84,6 @@ export default function ProductForm({ product, onSubmit, onCancel, isLoading = f
         unit: safeUnit,
         price: product.price || "",
         description: product.description || "",
-        taxStatus: product.taxStatus || false,
         print: product.print !== undefined ? product.print : true,
         labelSize: safeLabelSize,
       });
@@ -207,28 +205,15 @@ export default function ProductForm({ product, onSubmit, onCancel, isLoading = f
         )}
       </div>
 
-      <div className="flex items-center space-x-4">
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            id="taxStatus"
-            checked={formData.taxStatus}
-            onCheckedChange={(checked) =>
-              setFormData(prev => ({ ...prev, taxStatus: checked as boolean }))
-            }
-          />
-          <Label htmlFor="taxStatus">Tax Status</Label>
-        </div>
-
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            id="print"
-            checked={formData.print}
-            onCheckedChange={(checked) =>
-              setFormData(prev => ({ ...prev, print: checked as boolean }))
-            }
-          />
-          <Label htmlFor="print">Print Label</Label>
-        </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id="print"
+          checked={formData.print}
+          onCheckedChange={(checked) =>
+            setFormData(prev => ({ ...prev, print: checked as boolean }))
+          }
+        />
+        <Label htmlFor="print">Print Label</Label>
       </div>
 
       <div className="flex justify-end space-x-2 pt-4">

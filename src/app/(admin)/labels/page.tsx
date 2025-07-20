@@ -1,8 +1,7 @@
 'use client'
 import { useState, useEffect } from "react";
-import { createRoot } from 'react-dom/client';
 import { useAuthContext } from "@/context/AuthContext";
-import { Product, ProductFormData, LabelSize } from "@/types/product";
+import { Product, ProductFormData } from "@/types/product";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -16,8 +15,6 @@ import { Plus, Loader2, AlertCircle, Printer, Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import ProductsTable from "@/components/ProductsTable";
 import ProductDialog from "@/components/ProductDialog";
-import NormalLabel from "@/components/NormalLabel";
-import SmallLabel from "@/components/SmallLabel";
 import getProducts from "@/firebase/firestore/getProducts";
 import addData from "@/firebase/firestore/addData";
 import updateData from "@/firebase/firestore/updateData";
@@ -163,7 +160,6 @@ export default function LabelsPage() {
         description: `${product.description} (Copy)`,
         unit: product.unit,
         price: product.price,
-        taxStatus: product.taxStatus,
         print: false,
         labelSize: product.labelSize
       };
@@ -210,73 +206,7 @@ export default function LabelsPage() {
   const printableProductsCount = products.filter(product => product.print).length;
 
   const handlePrintLabels = () => {
-    const printableProducts = products.filter(product => product.print);
-    if (printableProducts.length === 0) return;
-
-    // Create a temporary container for printing
-    const printContainer = document.createElement('div');
-    printContainer.style.position = 'absolute';
-    printContainer.style.left = '-9999px';
-    printContainer.style.top = '0';
-    
-    // Add print-specific styles
-    const printStyles = document.createElement('style');
-    printStyles.textContent = `
-      @media print {
-        body * { visibility: hidden; }
-        .print-container, .print-container * { visibility: visible; }
-        .print-container {
-          position: absolute !important;
-          left: 0 !important;
-          top: 0 !important;
-          width: 100% !important;
-          height: 100% !important;
-        }
-        .print-grid {
-          display: grid !important;
-          grid-template-columns: 1fr 1fr !important;
-          gap: 10px !important;
-          width: 100% !important;
-        }
-        .print-label {
-          break-inside: avoid !important;
-          page-break-inside: avoid !important;
-        }
-      }
-    `;
-    document.head.appendChild(printStyles);
-    
-    printContainer.className = 'print-container';
-    document.body.appendChild(printContainer);
-
-    // Create React elements for each printable product
-    const PrintContent = () => (
-      <div className="print-grid">
-        {printableProducts.map((product) => (
-          <div key={product.id} className="">
-            {product.labelSize === LabelSize.SMALL ? (
-              <SmallLabel product={product} />
-            ) : (
-              <NormalLabel product={product} />
-            )}
-          </div>
-        ))}
-      </div>
-    );
-
-    const root = createRoot(printContainer);
-    root.render(<PrintContent />);
-
-    // Wait a bit for rendering, then print
-    setTimeout(() => {
-      window.print();
-      
-      // Cleanup after printing
-      setTimeout(() => {
-        document.body.removeChild(printContainer);
-        document.head.removeChild(printStyles);
-      }, 100);
-    }, 100);
+    router.push('/print');
   };
 
   if (!user) {
