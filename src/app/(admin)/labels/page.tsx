@@ -1,7 +1,8 @@
 'use client'
 import { useState, useEffect } from "react";
+import { createRoot } from 'react-dom/client';
 import { useAuthContext } from "@/context/AuthContext";
-import { Product, ProductFormData } from "@/types/product";
+import { Product, ProductFormData, LabelSize } from "@/types/product";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -151,6 +152,38 @@ export default function LabelsPage() {
     }
   };
 
+  const handleDuplicateProduct = async (product: Product) => {
+    try {
+      setIsSubmitting(true);
+      const newProductId = `product_${Date.now()}`;
+      
+      // Create a copy of the product without the id, and set print to false by default
+      const duplicatedProduct: ProductFormData = {
+        category: product.category,
+        description: `${product.description} (Copy)`,
+        unit: product.unit,
+        price: product.price,
+        taxStatus: product.taxStatus,
+        print: false,
+        labelSize: product.labelSize
+      };
+      
+      const { error } = await addData("products", newProductId, duplicatedProduct);
+      
+      if (error) {
+        console.error("Error duplicating product:", error);
+        setError("Failed to duplicate product. Please try again.");
+      } else {
+        await loadProducts();
+      }
+    } catch (err) {
+      console.error("Unexpected error:", err);
+      setError("An unexpected error occurred while duplicating the product.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const openCreateDialog = () => {
     setEditingProduct(undefined);
     setDialogOpen(true);
@@ -177,7 +210,73 @@ export default function LabelsPage() {
   const printableProductsCount = products.filter(product => product.print).length;
 
   const handlePrintLabels = () => {
-    router.push('/print');
+    const printableProducts = products.filter(product => product.print);
+    if (printableProducts.length === 0) return;
+
+    // Create a temporary container for printing
+    const printContainer = document.createElement('div');
+    printContainer.style.position = 'absolute';
+    printContainer.style.left = '-9999px';
+    printContainer.style.top = '0';
+    
+    // Add print-specific styles
+    const printStyles = document.createElement('style');
+    printStyles.textContent = `
+      @media print {
+        body * { visibility: hidden; }
+        .print-container, .print-container * { visibility: visible; }
+        .print-container {
+          position: absolute !important;
+          left: 0 !important;
+          top: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+        }
+        .print-grid {
+          display: grid !important;
+          grid-template-columns: 1fr 1fr !important;
+          gap: 10px !important;
+          width: 100% !important;
+        }
+        .print-label {
+          break-inside: avoid !important;
+          page-break-inside: avoid !important;
+        }
+      }
+    `;
+    document.head.appendChild(printStyles);
+    
+    printContainer.className = 'print-container';
+    document.body.appendChild(printContainer);
+
+    // Create React elements for each printable product
+    const PrintContent = () => (
+      <div className="print-grid">
+        {printableProducts.map((product) => (
+          <div key={product.id} className="">
+            {product.labelSize === LabelSize.SMALL ? (
+              <SmallLabel product={product} />
+            ) : (
+              <NormalLabel product={product} />
+            )}
+          </div>
+        ))}
+      </div>
+    );
+
+    const root = createRoot(printContainer);
+    root.render(<PrintContent />);
+
+    // Wait a bit for rendering, then print
+    setTimeout(() => {
+      window.print();
+      
+      // Cleanup after printing
+      setTimeout(() => {
+        document.body.removeChild(printContainer);
+        document.head.removeChild(printStyles);
+      }, 100);
+    }, 100);
   };
 
   if (!user) {
@@ -261,6 +360,7 @@ export default function LabelsPage() {
               onEdit={openEditDialog}
               onDelete={openDeleteDialog}
               onTogglePrint={handleTogglePrint}
+              onDuplicate={handleDuplicateProduct}
             />
           )}
         </CardContent>

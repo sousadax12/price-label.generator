@@ -1,65 +1,109 @@
-# Next.js 13 Firebase Starter
+# Price Label Generator
 
-This is a starter template for building Next.js 13 applications with Firebase. It provides a solid foundation for developing modern web applications with server-side rendering, authentication, and real-time data synchronization.
+A modern web application designed for retail food businesses to manage product inventory and generate professional price labels for printing. Built specifically for Portuguese markets with support for various food categories and euro pricing.
 
 ## Features
 
-- Next.js 13: Build powerful and scalable server-side rendered React applications.
-- Firebase: Leverage the Firebase platform for authentication, real-time database, and cloud functions.
-- Tailwind CSS: Rapidly build custom user interfaces using the utility-first CSS framework.
-- Automatic Code Splitting: Optimize performance by splitting your JavaScript code into smaller, cacheable chunks.
-- Dynamic Routing: Create dynamic routes for handling different pages and content.
-- Hot Module Replacement: Enjoy a fast development experience with hot module replacement for instant code changes.
-- Environment Variables: Safely manage environment-specific configuration values using environment variables.
-- ESLint and Prettier: Maintain code quality and consistency with the help of ESLint and Prettier.
+- **Product Management**: Create, edit, delete, and organize products by food categories
+- **Label Generation**: Generate professional price labels in two sizes (8x5cm and 6.5x3.5cm)
+- **Category Support**: Specialized for food retail with 10+ categories (VACA, QUEIJO, MERCEARIA, etc.)
+- **Print System**: Select products and print labels in optimized layouts for retail use
+- **Authentication**: Secure user authentication with Firebase
+- **Real-time Database**: Product data synchronized with Firebase Firestore
+- **Responsive Design**: Works on desktop and mobile devices
+- **TypeScript**: Fully typed for better development experience
+- **Modern UI**: Built with Tailwind CSS and shadcn/ui components
+
+## Product Categories
+
+The application supports the following food categories with custom icons:
+
+- **VACA** - Beef/Cow products
+- **QUEIJO** - Cheese products  
+- **MERCEARIA** - Grocery items
+- **PORCO** - Pork products
+- **AVE** - Poultry products
+- **BORREGO** - Lamb products
+- **CABRITO** - Goat products
+- **CHARCUTARIA** - Charcuterie/Deli products
+- **COELHO** - Rabbit products
+- **GERAL** - General products
+
+## Usage
+
+1. **Sign In**: Access the application with your credentials
+2. **Manage Products**: Add, edit, or delete products with pricing and category information
+3. **Select for Print**: Use checkboxes to select which products need labels
+4. **Generate Labels**: Navigate to the print page to preview your labels
+5. **Print**: Use your browser's print function to output labels on paper
 
 ## Prerequisites
 
-Before getting started, ensure you have the following prerequisites:
-
-- Node.js 14 or higher
+- Node.js 18 or higher
 - npm or yarn package manager
+- Firebase project with Firestore and Authentication enabled
 
 ## Getting Started
 
-- To start a new project using this template click `Use this template` button.
-- Navigate into the project directory: `cd nextjs-13-firebase-starter`
-- Install the dependencies:
-
+1. Clone the repository:
 ```bash
-  npm install
-  # or
-  yarn install
+git clone <repository-url>
+cd price-label-generator
 ```
 
-- Run the development server:
-
+2. Install dependencies:
 ```bash
-  npm run dev
-  # or
-  yarn dev
+npm install
+# or
+yarn install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Set up environment variables (see Firebase Setup section below)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. Run the development server:
+```bash
+npm run dev
+# or
+yarn dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+5. Open [http://localhost:3000](http://localhost:3000) to access the application
 
-## Learn More
+## Technology Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Next.js 15** - React framework with App Router
+- **React 19** - UI library with TypeScript
+- **Firebase 11** - Authentication and Firestore database
+- **Tailwind CSS 4** - Utility-first CSS framework
+- **shadcn/ui** - Component library with Radix UI primitives
+- **Lucide React** - Icon library
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
+src/
+├── app/                    # Next.js App Router pages
+│   ├── labels/            # Main product management page
+│   ├── print/             # Label printing page
+│   └── signin/            # Authentication page
+├── components/
+│   └── ui/                # shadcn/ui components
+├── context/
+│   └── AuthContext.tsx    # Firebase authentication context
+├── firebase/              # Firebase configuration and services
+│   ├── config.ts          # Firebase initialization
+│   ├── auth/              # Authentication functions
+│   └── firestore/         # Database operations
+├── lib/                   # Utility functions
+└── types/                 # TypeScript type definitions
+```
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Push your code to a Git repository
+2. Connect your repository to [Vercel](https://vercel.com)
+3. Add your Firebase environment variables in Vercel's dashboard
+4. Deploy with automatic builds on every push
 
 ## Set Up Firebase
 
@@ -98,41 +142,34 @@ NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 
 You should now be setup to use Firebase.
 
-## Authentication
+## Development Commands
 
-- In `src/firebase` directory, exists the directory `auth` containing the logic for `signin` and `signup`.
+```bash
+# Development server
+npm run dev
 
-## Folder Structure
+# Production build  
+npm run build
 
-The folder structure of this project is organized as follows:
+# Start production server
+npm run start
 
-- `pages`: Contains the Next.js pages for server-side rendering.
-- `components`: Holds the reusable React components.
-- `lib`: Includes utility functions and modules.
-- `public`: Stores static assets such as images, fonts, and stylesheets.
-- `styles`: Contains global styles and Tailwind CSS configuration.
-- `firebase`: Houses the Firebase configuration and Firebase-related functions.
-
-Feel free to modify and expand the folder structure according to your project requirements.
-
-## Deployment
-
-To deploy your Next.js application with Firebase, follow the Firebase deployment instructions specific to your hosting option (Firebase Hosting, Cloud Functions, etc.). Make sure to set up the appropriate environment variables for your production environment.
+# Linting
+npm run lint
+```
 
 ## Contributing
 
-Contributions are welcome! If you encounter any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the MIT License.
 
-## Acknowledgements
+## Support
 
-This project was created using the Next.js framework and Firebase platform.
-
-Resources
-
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Firebase Documentation](https://firebase.google.com/docs)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+For support or questions about using this application for your retail business, please open an issue in the repository.

@@ -12,19 +12,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Edit, Trash2, ArrowUpDown } from "lucide-react";
+import { Edit, Trash2, ArrowUpDown, Copy } from "lucide-react";
 
 interface ProductsTableProps {
   products: Product[];
   onEdit: (product: Product) => void;
   onDelete: (productId: string) => void;
   onTogglePrint: (productId: string, newPrintValue: boolean) => void;
+  onDuplicate: (product: Product) => void;
 }
 
 type SortField = keyof Product;
 type SortDirection = 'asc' | 'desc';
 
-export default function ProductsTable({ products, onEdit, onDelete, onTogglePrint }: ProductsTableProps) {
+export default function ProductsTable({ products, onEdit, onDelete, onTogglePrint, onDuplicate }: ProductsTableProps) {
   const [sortField, setSortField] = useState<SortField>('description');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
 
@@ -148,6 +149,13 @@ export default function ProductsTable({ products, onEdit, onDelete, onTogglePrin
                       onClick={() => onEdit(product)}
                     >
                       <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => onDuplicate(product)}
+                    >
+                      <Copy className="h-4 w-4" />
                     </Button>
                     <Button
                       variant="ghost"
