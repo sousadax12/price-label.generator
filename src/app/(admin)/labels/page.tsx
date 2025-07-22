@@ -233,13 +233,6 @@ export default function LabelsPage() {
         <div className="flex gap-2">
           <Button 
             variant="outline" 
-            onClick={() => setShowPreview(!showPreview)}
-          >
-            {showPreview ? <EyeOff className="h-4 w-4 mr-2" /> : <Eye className="h-4 w-4 mr-2" />}
-            {showPreview ? 'Hide Preview' : 'Show Preview'}
-          </Button>
-          <Button 
-            variant="outline" 
             onClick={handlePrintLabels}
             disabled={printableProductsCount === 0}
           >
