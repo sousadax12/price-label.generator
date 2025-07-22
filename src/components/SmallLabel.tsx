@@ -21,7 +21,7 @@ export default function SmallLabel({ product }: SmallLabelProps) {
       <div className="flex justify-between flex-col items-end">
         <div className="flex flex-col items-end">
           <span className="text-3xl italic text-gray-900 print:text-black">
-              {Number.parseFloat(product.price).toFixed(2)}
+              {product.price}
             </span>
           <span className="text-xs items-end text-right font-medium text-gray-600 print:text-black">
             €/ {product.unit === Unit.KG ? 'kg' : 'un'}

@@ -36,7 +36,7 @@ export default function NormalLabel({ product }: NormalLabelProps) {
         </div>
         <div className="flex flex-col items-end">
           <div className="text-6xl items-end italic text-gray-900 print:text-black">
-              {Number.parseFloat(product.price).toFixed(2)}
+              {product.price}
             </div>
           <span className="text-md items-end text-right font-medium text-gray-600 print:text-black">
             €/ {product.unit === Unit.KG ? 'kg' : 'un'}
