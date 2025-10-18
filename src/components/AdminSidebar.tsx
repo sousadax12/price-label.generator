@@ -15,7 +15,8 @@ import {
   LogOut,
   Menu,
   X,
-  Printer
+  Printer,
+  ListOrdered
 } from 'lucide-react';
 
 const navigationItems = [
@@ -28,6 +29,11 @@ const navigationItems = [
     name: 'Imprimir',
     href: '/print',
     icon: Printer
+  },
+  {
+    name: 'Filas',
+    href: '/queues',
+    icon: ListOrdered
   },
 ];
 
