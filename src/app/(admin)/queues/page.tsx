@@ -203,7 +203,7 @@ export default function QueuesPage() {
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
             <p className="text-muted-foreground mb-4">
-              No queues found. Click "Add Queue" to get started.
+              No queues found. Click &ldquo;Add Queue&rdquo; to get started.
             </p>
             <Button onClick={openCreateDialog}>
               <Plus className="h-4 w-4 mr-2" />
