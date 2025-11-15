@@ -4,6 +4,7 @@ import { Queue, QueueFormData } from "@/types/queue";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const DEFAULT_FORM_DATA: QueueFormData = {
   name: "",
@@ -14,6 +15,7 @@ const DEFAULT_FORM_DATA: QueueFormData = {
   videoVolume: 0,
   soundVolume: 100,
   velocity: 50,
+  hasNews: true,
 };
 
 interface QueueFormProps {
@@ -38,6 +40,7 @@ export default function QueueForm({ queue, onSubmit, onCancel, isLoading = false
         videoVolume: queue.videoVolume || 0,
         soundVolume: queue.soundVolume || 100,
         velocity: queue.velocity || 50,
+        hasNews: queue.hasNews ?? true,
       });
     } else {
       setFormData(DEFAULT_FORM_DATA);
@@ -216,6 +219,22 @@ export default function QueueForm({ queue, onSubmit, onCancel, isLoading = false
             <p className="text-sm text-red-500">{errors.velocity}</p>
           )}
         </div>
+      </div>
+
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id="hasNews"
+          checked={formData.hasNews}
+          onCheckedChange={(checked) =>
+            setFormData(prev => ({ ...prev, hasNews: checked === true }))
+          }
+        />
+        <Label
+          htmlFor="hasNews"
+          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+        >
+          Enable News
+        </Label>
       </div>
 
       <div className="flex justify-end space-x-2 pt-4">

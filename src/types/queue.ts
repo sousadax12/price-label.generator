@@ -9,6 +9,7 @@ export interface Queue {
   videoVolume: number;       // Video volume (0-100)
   soundVolume: number;       // Sound volume (0-100)
   velocity: number;          // Scroll/transition speed
+  hasNews: boolean;          // Whether news is enabled (default: true)
 }
 
 // Form data type for creating/editing queues
@@ -21,4 +22,5 @@ export interface QueueFormData {
   videoVolume: number;
   soundVolume: number;
   velocity: number;
+  hasNews: boolean;
 }

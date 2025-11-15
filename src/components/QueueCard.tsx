@@ -3,7 +3,7 @@ import { Queue } from "@/types/queue";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Edit, Trash2, Video, Volume2 } from "lucide-react";
+import { Edit, Trash2, Video, Volume2, Newspaper } from "lucide-react";
 
 interface QueueCardProps {
   queue: Queue;
@@ -88,6 +88,13 @@ export default function QueueCard({ queue, onEdit, onDelete }: QueueCardProps) {
 
         <div className="text-xs text-muted-foreground truncate">
           <span className="font-medium">Velocity:</span> {queue.velocity}
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Newspaper className="h-4 w-4 text-muted-foreground" />
+          <Badge variant={queue.hasNews ? "default" : "secondary"} className="text-xs">
+            {queue.hasNews ? "News Enabled" : "News Disabled"}
+          </Badge>
         </div>
 
         {queue.videoURL && (
