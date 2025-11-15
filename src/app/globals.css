@@ -124,11 +124,6 @@
 
 /* Print-specific styles for label printing */
 @media print {
-  /* Hide all non-essential elements during printing */
-  .print\\:hidden {
-    display: none !important;
-  }
-  
   /* Optimize page layout for printing */
   body {
     background: white !important;
@@ -242,23 +237,8 @@
     border: 1px dashed black !important;
   }
   
-  /* Grid layout adjustments for printing */
-  .print\\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  }
-  
-  .print\\:gap-2 {
-    gap: 2mm !important;
-  }
-  
-  /* Force page breaks between sections if needed */
-  .print\\:break-inside-avoid {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-  
   /* Hide elements that shouldn't appear in print */
-  button, .print\\:hidden, nav, aside, header, footer {
+  button, nav, aside, header, footer {
     display: none !important;
   }
 }
