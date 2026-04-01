@@ -12,16 +12,6 @@
   resolved "https://registry.npmjs.org/@alloc/quick-lru/-/quick-lru-5.2.0.tgz"
   integrity sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==
 
-"@antfu/ni@^25.0.0":
-  version "25.0.0"
-  resolved "https://registry.yarnpkg.com/@antfu/ni/-/ni-25.0.0.tgz#2bf6834237e848a994b07fc311acad8d5da179a6"
-  integrity sha512-9q/yCljni37pkMr4sPrI3G4jqdIk074+iukc5aFJl7kmDCCsiJrbZ6zKxnES1Gwg+i9RcDZwvktl23puGslmvA==
-  dependencies:
-    ansis "^4.0.0"
-    fzf "^0.5.2"
-    package-manager-detector "^1.3.0"
-    tinyexec "^1.0.1"
-
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.27.1":
   version "7.27.1"
   resolved "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.27.1.tgz"
@@ -2002,11 +1992,6 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-ansis@^4.0.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/ansis/-/ansis-4.2.0.tgz#2e6e61c46b11726ac67f78785385618b9e658780"
-  integrity sha512-HqZ5rWlFjGiV0tDm3UxxgNRqsOTniqoKZu0pIAfh7TZQMGuZK+hH0drySty0si0QXj1ieop4+SkSfPZBPPkHig==
-
 argparse@^2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/argparse/-/argparse-2.0.1.tgz"
@@ -3501,11 +3486,6 @@ fuzzysort@^3.1.0:
   resolved "https://registry.yarnpkg.com/fuzzysort/-/fuzzysort-3.1.0.tgz#4d7832d8fa48ad381753eaa7a7aae9927bdc10a8"
   integrity sha512-sR9BNCjBg6LNgwvxlBd0sBABvQitkLzoVY9MYYROQVX/FvfJ4Mai9LsGhDgd8qYdds0bY77VzYd5iuB+v5rwQQ==
 
-fzf@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/fzf/-/fzf-0.5.2.tgz#a0561b12082c3401b4240cfb7d76085d7aeb68ff"
-  integrity sha512-Tt4kuxLXFKHy8KT40zwsUPUkg1CrsgY25FxA2U/j/0WgEDCk3ddc/zLTCCcbSHX9FcKtLuVaDGtGE/STWC+j3Q==
-
 gensync@^1.0.0-beta.2:
   version "1.0.0-beta.2"
   resolved "https://registry.npmjs.org/gensync/-/gensync-1.0.0-beta.2.tgz"
@@ -4852,11 +4832,6 @@ p-locate@^5.0.0:
   dependencies:
     p-limit "^3.0.2"
 
-package-manager-detector@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/package-manager-detector/-/package-manager-detector-1.3.0.tgz#b42d641c448826e03c2b354272456a771ce453c0"
-  integrity sha512-ZsEbbZORsyHuO00lY1kV3/t72yp6Ysay6Pd17ZAlNGuGwmWDLCJxFpRs0IzfXfj1o4icJOkUEioexFHzyPurSQ==
-
 parent-module@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmjs.org/parent-module/-/parent-module-1.0.1.tgz"
@@ -5407,12 +5382,11 @@ setprototypeof@1.2.0, setprototypeof@~1.2.0:
   resolved "https://registry.npmjs.org/setprototypeof/-/setprototypeof-1.2.0.tgz"
   integrity sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==
 
-shadcn@^3.8.5:
-  version "3.8.5"
-  resolved "https://registry.yarnpkg.com/shadcn/-/shadcn-3.8.5.tgz#3dd5f80a26db7d3e9fbf07f72d3646c71de78f6c"
-  integrity sha512-jPRx44e+eyeV7xwY3BLJXcfrks00+M0h5BGB9l6DdcBW4BpAj4x3lVmVy0TXPEs2iHEisxejr62sZAAw6B1EVA==
+shadcn@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/shadcn/-/shadcn-4.1.2.tgz#3641b2d02f8c9c9eff6f39fbdc5b74a20ead0a5b"
+  integrity sha512-qNQcCavkbYsgBj+X09tF2bTcwRd8abR880bsFkDU2kMqceMCLAm5c+cLg7kWDhfh1H9g08knpQ5ZEf6y/co16g==
   dependencies:
-    "@antfu/ni" "^25.0.0"
     "@babel/core" "^7.28.0"
     "@babel/parser" "^7.28.0"
     "@babel/plugin-transform-typescript" "^7.28.0"
@@ -5780,11 +5754,6 @@ tiny-invariant@^1.3.3:
   version "1.3.3"
   resolved "https://registry.npmjs.org/tiny-invariant/-/tiny-invariant-1.3.3.tgz"
   integrity sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==
-
-tinyexec@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/tinyexec/-/tinyexec-1.0.1.tgz#70c31ab7abbb4aea0a24f55d120e5990bfa1e0b1"
-  integrity sha512-5uC6DDlmeqiOwCPmK9jMSdOuZTh8bU39Ys6yidB+UTt5hfZUPGAypSgFRiEp+jbi9qH40BLDvy85jIU88wKSqw==
 
 tldts-core@^7.0.16:
   version "7.0.16"
